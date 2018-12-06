@@ -1,0 +1,9 @@
+name: cerebral
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  source_gen: ^0.9.1+3

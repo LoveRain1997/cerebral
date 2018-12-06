@@ -1,0 +1,17 @@
+targets:
+  $default:
+    builders:
+      cerebral:
+        enabled: true
+        generate_for:
+          include:
+            - lib/*
+
+builders:
+  cerebral:
+    import: "package:cerebral/src/builder.dart"
+    builder_factories: ["cerebralBuilder"]
+    build_extensions: {".dart": ["cerebral.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
