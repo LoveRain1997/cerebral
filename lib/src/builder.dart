@@ -21,18 +21,14 @@ class CerebralGenerator extends GeneratorForAnnotation<State> {
   }
 
   Iterable<String> generateCopyWith(Element element, ConstantReader annotation, BuildStep buildStep) {
-    final codeLines = <String>[];
-    codeLines.add('  factory ${element.name}.copyWith() {return ${element.name}();}');
-    if (element is ClassElement) {
-      final classElement = element;
-      classElement.fields.forEach((fieldElement) {
-        final hasAnnotation = _stateFieldTypeChecker.hasAnnotationOfExact(fieldElement);
-        if (hasAnnotation) {
-
-        }
-        codeLines.add('// $hasAnnotation');
-      });
+    if (element is! ClassElement) {
     }
+    final codeLines = <String>[];
+    codeLines.add('''
+    static ${element.name} copyWith({
+    
+    }) {return ${element.name}();}
+    ''');
     return codeLines;
   }
 }
