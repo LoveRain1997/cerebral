@@ -1,40 +1,37 @@
 import 'dart:async';
+
+import 'package:cerebral/src/base.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class Action {
-  bool get isWarp;
-}
-
-class CerebralState {
-  const CerebralState();
-}
+import 'action.dart';
 
 typedef T Signal<T>(Action action, T state);
 typedef T MapFunction<T, S>(S state);
 
-class Store<T> {
-  T _state;
-  Map<Action, List<Signal>> _signals;
+class Store<T> extends StoreBase {
   // ignore: close_sinks
   StreamController<T> _controller;
+  T _state;
+  Map<Action, List<Signal>> _signals;
   Stream<T> _stream;
 
   T get state => _state;
-  Store(this._state, this._signals) {
+
+  Store() {
     this._controller = StreamController<T>.broadcast();
     this._stream = this._controller.stream;
   }
 
-  StreamBuilder connector<T1>({
-    MapFunction<T1, T> map,
-    AsyncWidgetBuilder<T1> builder,
+  StreamBuilder connector<S>({
+    MapFunction<S, T> map,
+    AsyncWidgetBuilder<S> builder,
     Key key,
   }) {
-    T1 previousValue;
+    S previousValue;
     return StreamBuilder(
       key: key,
-      stream: this._stream.transform(StreamTransformer<T, T1>.fromHandlers(
-          handleData: (T data, EventSink<T1> sink) {
+      stream: this._stream.transform(StreamTransformer<T, S>.fromHandlers(
+          handleData: (T data, EventSink<S> sink) {
         final transformed = map(data);
         if (previousValue.hashCode != transformed.hashCode &&
             previousValue != transformed) {
@@ -54,7 +51,7 @@ class Store<T> {
         state = signals[i](action, state);
       }
       this._state = state;
-      if (action.isWarp) {
+      if (action is WarpAction) {
         // TODO persist to storage
       }
       this._controller.add(this._state);
