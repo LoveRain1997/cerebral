@@ -7,3 +7,4 @@ dependencies:
   flutter:
     sdk: flutter
   source_gen: ^0.9.1+3
+  shared_preferences: ^0.4.3

@@ -49,7 +49,7 @@ class StoreGenerator extends Generator {
         initializeLines.add('];');
       }
     });
-    yield '''class _${element.name}Mixin {
+    yield '''mixin _${element.name}Mixin {
       void _initialize(Map<Type, List<ActionResolver>> signals) {
         ${initializeLines.join('\n')}
       }
