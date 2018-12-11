@@ -5,22 +5,26 @@ import 'package:flutter/widgets.dart';
 
 import 'action.dart';
 
-typedef T Signal<T>(Action action, T state);
+typedef void ActionResolver<T>(Action action, T state);
 typedef T MapFunction<T, S>(S state);
 
-class Store<T> extends StoreBase {
+abstract class Store<T> extends StoreBase {
   // ignore: close_sinks
   StreamController<T> _controller;
   T _state;
-  Map<Action, List<Signal>> _signals;
+  Map<Type, List<ActionResolver>> _signals;
   Stream<T> _stream;
 
   T get state => _state;
 
   Store() {
+    this._signals = {};
     this._controller = StreamController<T>.broadcast();
     this._stream = this._controller.stream;
+    this.initializeSignals(this._signals);
   }
+
+  void initializeSignals(Map<Type, List<ActionResolver>> signals);
 
   StreamBuilder connector<S>({
     MapFunction<S, T> map,
@@ -46,13 +50,8 @@ class Store<T> extends StoreBase {
   void consume(Action action) {
     if (this._signals.containsKey(action)) {
       final signals = this._signals[action];
-      T state = this._state;
       for (int i = 0; i < signals.length; i++) {
-        state = signals[i](action, state);
-      }
-      this._state = state;
-      if (action is WarpAction) {
-        // TODO persist to storage
+        signals[i](action, state);
       }
       this._controller.add(this._state);
     }

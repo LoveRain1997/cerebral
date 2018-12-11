@@ -47,11 +47,11 @@ class StateGenerator extends GeneratorForAnnotation<State> {
     }
     for (FieldElement value
         in element.fields.where((field) => field.isPublic)) {
-      yield '${value.type} get ${value.name} => this.${value.name};';
+      yield '${value.type} get ${value.name} => this._${value.name};';
     }
     for (FieldElement value
         in element.fields.where((field) => field.isPublic)) {
-      yield 'set ${value.name}(${value.type} _${value.name}) => this.${value.name} = _${value.name};';
+      yield 'set ${value.name}(${value.type} ${value.name}) => this._${value.name} = ${value.name};';
     }
   }
 }
