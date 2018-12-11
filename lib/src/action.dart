@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 abstract class Action {
   Action(this.type);
 
