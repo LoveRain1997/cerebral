@@ -3,7 +3,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:cerebral/src/state.dart';
 
-class StateGenerator extends GeneratorForAnnotation<State> {
+class StateGenerator extends GeneratorForAnnotation<CerebralState> {
   @override
   Iterable<String> generateForAnnotatedElement(
     Element element,

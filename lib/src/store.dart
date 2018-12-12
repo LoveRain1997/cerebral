@@ -8,7 +8,7 @@ import 'action.dart';
 typedef void ActionResolver<T>(Action action, T state);
 typedef T MapFunction<T, S>(S state);
 
-abstract class Store<T> extends StoreBase {
+abstract class CerebralStore<T> extends StoreBase {
   // ignore: close_sinks
   StreamController<T> _controller;
   T _state;

@@ -1,5 +1,5 @@
-class State {
-  const State();
+class CerebralState {
+  const CerebralState();
 }
 
 class StateField {
