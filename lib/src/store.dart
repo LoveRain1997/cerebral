@@ -17,7 +17,7 @@ abstract class CerebralStore<T> extends StoreBase {
 
   T get state => _state;
 
-  Store() {
+  CerebralStore() {
     this._signals = {};
     this._controller = StreamController<T>.broadcast();
     this._stream = this._controller.stream;
@@ -48,8 +48,9 @@ abstract class CerebralStore<T> extends StoreBase {
   }
 
   void consume(Action action) {
-    if (this._signals.containsKey(action)) {
-      final signals = this._signals[action];
+    final type = action.runtimeType;
+    if (this._signals.containsKey(type)) {
+      final signals = this._signals[type];
       for (int i = 0; i < signals.length; i++) {
         signals[i](action, state);
       }

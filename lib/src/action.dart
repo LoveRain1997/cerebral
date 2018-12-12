@@ -9,11 +9,11 @@ enum _ActionType {
   flat,
 }
 
-abstract class WarpAction<T> extends Action {
+abstract class WarpAction extends Action {
   WarpAction() : super(_ActionType.warp);
 }
 
-abstract class FlatAction<T> extends Action {
+abstract class FlatAction extends Action {
   FlatAction() : super(_ActionType.flat);
 }
 
