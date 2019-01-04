@@ -49,7 +49,8 @@ class StoreGenerator extends Generator {
         initializeLines.add('];');
       }
     });
-    yield '''mixin _${element.name}Mixin {
+    final stateName = element.supertype.typeArguments.first.displayName;
+    yield '''mixin _${element.name}Mixin on CerebralStore<$stateName> {
       void _initialize(Map<Type, List<ActionResolver>> signals) {
         ${initializeLines.join('\n')}
       }
