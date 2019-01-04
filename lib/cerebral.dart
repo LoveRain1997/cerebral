@@ -1,4 +1,5 @@
-export 'src/state.dart' show CerebralState, StateField;
+export 'src/state.dart' show CerebralState;
 export 'src/event_bus.dart' show EventBus;
-export 'src/action.dart' show Action, WarpAction, FlatAction, Resolver;
+export 'src/action.dart' show Action, InitializeAction, NormalAction, Resolver, AutoSave;
 export 'src/store.dart' show CerebralStore, ActionResolver;
+export 'src/persistor.dart' show SharedPreferencesPersistor;

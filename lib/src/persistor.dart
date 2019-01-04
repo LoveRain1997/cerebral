@@ -5,10 +5,10 @@ abstract class Persistor {}
 class SharedPreferencesPersistor extends Persistor {
   SharedPreferencesPersistor() {
     SharedPreferences.getInstance()
-        .then((preferences) => this._preferences = preferences);
+        .then((preferences) => _preferences = preferences);
   }
 
-  SharedPreferences _preferences;
+  static SharedPreferences _preferences;
 
   Future<bool> setBool(String key, bool value) => _preferences.setBool(key, value);
 

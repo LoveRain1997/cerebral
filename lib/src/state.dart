@@ -1,7 +1,7 @@
-class CerebralState {
-  const CerebralState();
-}
+import 'store.dart';
 
-class StateField {
-  const StateField();
+abstract class CerebralState {
+  CerebralState(this.host) : assert(host != null);
+
+  final CerebralStore host;
 }

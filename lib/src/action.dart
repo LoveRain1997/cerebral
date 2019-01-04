@@ -5,16 +5,16 @@ abstract class Action {
 }
 
 enum _ActionType {
-  warp,
-  flat,
+  initialize,
+  normal,
 }
 
-abstract class WarpAction extends Action {
-  WarpAction() : super(_ActionType.warp);
+abstract class InitializeAction extends Action {
+  InitializeAction() : super(_ActionType.initialize);
 }
 
-abstract class FlatAction extends Action {
-  FlatAction() : super(_ActionType.flat);
+abstract class NormalAction extends Action {
+  NormalAction() : super(_ActionType.normal);
 }
 
 class Resolver {
@@ -25,4 +25,8 @@ class Resolver {
 
   final int priority;
   final Type store;
+}
+
+class AutoSave {
+  const AutoSave();
 }

@@ -4,27 +4,30 @@ import 'package:cerebral/src/base.dart';
 import 'package:flutter/widgets.dart';
 
 import 'action.dart';
+import 'persistor.dart';
+import 'state.dart';
 
 typedef void ActionResolver<T>(Action action, T state);
 typedef T MapFunction<T, S>(S state);
 
-abstract class CerebralStore<T> extends StoreBase {
+abstract class CerebralStore<T extends CerebralState, P extends Persistor>
+    extends StoreBase {
   // ignore: close_sinks
   StreamController<T> _controller;
   T _state;
+  final P persistor;
   Map<Type, List<ActionResolver>> _signals;
   Stream<T> _stream;
 
-  T get state => _state;
-
-  CerebralStore() {
+  CerebralStore(this.persistor)
+      : assert(persistor != null) {
     this._signals = {};
     this._controller = StreamController<T>.broadcast();
     this._stream = this._controller.stream;
-    this.initializeSignals(this._signals);
+    this.initialize(this._signals);
   }
 
-  void initializeSignals(Map<Type, List<ActionResolver>> signals);
+  void initialize(Map<Type, List<ActionResolver>> signals);
 
   StreamBuilder connector<S>({
     MapFunction<S, T> map,
@@ -52,7 +55,7 @@ abstract class CerebralStore<T> extends StoreBase {
     if (this._signals.containsKey(type)) {
       final signals = this._signals[type];
       for (int i = 0; i < signals.length; i++) {
-        signals[i](action, state);
+        signals[i](action, this._state);
       }
       this._controller.add(this._state);
     }
