@@ -53,7 +53,9 @@ abstract class CerebralStore<T extends CerebralState, P extends Persistor> exten
       for (int i = 0; i < signals.length; i++) {
         signals[i](action, this._state);
       }
-      this._controller.add(this._state);
+      if (action is NormalAction) {
+        this._controller.add(this._state);
+      }
     }
   }
 }
