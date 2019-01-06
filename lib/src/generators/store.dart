@@ -38,7 +38,10 @@ class StoreGenerator extends Generator {
       BuildStep buildStep,) sync* {
     final actions = library.classElements.where(
             (classElement) => actionTypeChecker.isAssignableFrom(classElement));
+    final stateName = element.supertype.typeArguments[0].displayName;
+    final persistorName = element.supertype.typeArguments[1].displayName;
     final initializeLines = <String>[];
+    initializeLines.add('this.persistor = $persistorName();');
     actions.forEach((action) {
       final resolvers = sortResolversByPriorities(action);
       if (resolvers.isNotEmpty) {
@@ -49,8 +52,8 @@ class StoreGenerator extends Generator {
         initializeLines.add('];');
       }
     });
-    final stateName = element.supertype.typeArguments.first.displayName;
-    yield '''mixin _${element.name}Mixin on CerebralStore<$stateName> {
+
+    yield '''mixin _${element.name}Mixin on CerebralStore<$stateName, $persistorName> {
       @override
       void initialize(Map<Type, List<ActionResolver>> signals) {
         ${initializeLines.join('\n')}

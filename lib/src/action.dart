@@ -7,6 +7,7 @@ abstract class Action {
 enum _ActionType {
   initialize,
   normal,
+  light,
 }
 
 abstract class InitializeAction extends Action {
@@ -15,6 +16,10 @@ abstract class InitializeAction extends Action {
 
 abstract class NormalAction extends Action {
   NormalAction() : super(_ActionType.normal);
+}
+
+abstract class LightAction extends Action {
+  LightAction() : super(_ActionType.light);
 }
 
 class Resolver {

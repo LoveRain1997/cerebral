@@ -1,4 +1,8 @@
 name: cerebral
+description: A State management tool for flutter
+version: 0.0.1
+author: haoguo <bard.guo@gmail.com>
+homepage: https://github.com/haoguo/cerebral
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"

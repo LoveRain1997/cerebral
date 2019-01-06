@@ -5,3 +5,7 @@ abstract class CerebralState {
 
   final CerebralStore host;
 }
+
+class EmptyState extends CerebralState {
+  EmptyState(CerebralStore host) : super(host);
+}
