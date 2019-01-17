@@ -10,6 +10,11 @@ abstract class Persistor {
   void autoSave(CerebralState state);
 }
 
+class DummyPersistor extends Persistor {
+  @override
+  void autoSave(CerebralState state) {}
+}
+
 class SharedPreferencesPersistor extends Persistor {
   static Future<SharedPreferencesPersistor> getInstance() async {
     _preferences = await SharedPreferences.getInstance();
