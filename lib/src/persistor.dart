@@ -4,8 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'state.dart';
 
-/// Every implementation should have a static method with a return value [Future<Your class>]
-/// and no parameters.
 abstract class Persistor {
   void autoSave(CerebralState state);
 }

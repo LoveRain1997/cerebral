@@ -37,7 +37,8 @@ class StoreGenerator extends Generator {
     final stateName = element.supertype.typeArguments[0].displayName;
     final persistorName = element.supertype.typeArguments[1].displayName;
     final initializeLines = <String>[];
-    initializeLines.add('this.persistor = await $persistorName.getInstance();');
+    initializeLines.add('this.state = $stateName();');
+    initializeLines.add('this.persistor = $persistorName();');
     actions.forEach((action) {
       final resolvers = sortResolversByPriorities(action);
       if (resolvers.isNotEmpty) {
@@ -53,7 +54,7 @@ class StoreGenerator extends Generator {
 
     yield '''mixin _${element.name}Mixin on CerebralStore<$stateName, $persistorName> {
       @override
-      void initialize(Map<Type, List<ActionResolver>> signals) async {
+      void initialize(Map<Type, List<ActionResolver>> signals) {
         ${initializeLines.join('\n')}
       }
     }''';
